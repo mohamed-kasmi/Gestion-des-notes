@@ -1,26 +1,24 @@
-package com.example.gestion_des_notes;
+package com.example.gestion_des_notes.Activityprof;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-public class Home_prof extends AppCompatActivity {
+import com.example.gestion_des_notes.MainActivity;
+import com.example.gestion_des_notes.R;
 
+public class Prof extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_home_prof);
+        setContentView(R.layout.activity_prof);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -44,20 +42,22 @@ public class Home_prof extends AppCompatActivity {
 
         // Inflate the menu for the popup
         popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
-
+        popupMenu.setGravity(Gravity.END);
         // Handle menu item clicks using if-else
         popupMenu.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.home) {
                 // Show "Hello Home" toast when Home is clicked
-                Intent i=new Intent(Home_prof.this, Home_prof.class);
+                Intent i=new Intent(Prof.this, Home_prof.class);
                 startActivity(i);
                 return true;
             } else if (item.getItemId() == R.id.addnote) {
-                Intent i=new Intent(Home_prof.this, Add_note.class);
+                Intent i=new Intent(Prof.this, Add_note.class);
                 startActivity(i);
+                return true;
             } else if (item.getItemId() == R.id.logout) {
-                Intent i=new Intent(Home_prof.this, MainActivity.class);
+                Intent i=new Intent(Prof.this, MainActivity.class);
                 startActivity(i);
+                return true;
             }
             return false;
         });
@@ -65,4 +65,6 @@ public class Home_prof extends AppCompatActivity {
         // Show the popup menu
         popupMenu.show();
     }
+
+
 }
