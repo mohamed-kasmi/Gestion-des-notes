@@ -34,7 +34,6 @@ public class Prof extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
-
     private void showPopupMenu(View anchor) {
         // Create a PopupMenu anchored to the clicked view
         PopupMenu popupMenu = new PopupMenu(this, anchor);
