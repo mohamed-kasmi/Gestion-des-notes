@@ -11,6 +11,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.gestion_des_notes.Activityprof.Prof;
+
 public class SignUp extends AppCompatActivity {
     TextView T;
     @Override
