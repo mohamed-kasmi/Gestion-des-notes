@@ -16,7 +16,7 @@ import retrofit2.http.Path;
 
 public interface Apiprofreq {
     @GET("/profreq/getallprofreq")
-    Call<List<Prof>> getProfreq();
+    Call<List<Prof_Req>> getProfreq();
     @FormUrlEncoded
     @POST("/profreq/signuprforeq")
     Call<Void> addprofreq( @Field("cin") int cin,
@@ -26,6 +26,6 @@ public interface Apiprofreq {
                            @Field("email") String email,
                            @Field("password") String password);
     @DELETE("/profreq/delete/{cinprof}")
-    Call<String> deleteProfreq(@Path("cinprof") int cinprof);
+    Call<Void> deleteProfreq(@Path("cinprof") int cinprof);
 
 }
