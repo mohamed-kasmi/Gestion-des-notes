@@ -7,6 +7,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -19,8 +21,10 @@ public interface Apiprof {
     Call<Integer> getcinprobyfmail(@Query("email") String email);
     @POST("/prof/signup")
     Call<String> addprof(@Body Prof prof);
+    @FormUrlEncoded
     @POST("/prof/login")
-    Call<String> loginprof(@Body Prof prof);
+    Call<Void> loginprof(@Field("email") String email,
+                           @Field("password") String password);
     @DELETE("/profdelete/{cinprof/")
     Call<String> deletprof(@Path("cinprof") int cinprof);
 
