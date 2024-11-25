@@ -21,14 +21,19 @@ public interface Apiprof {
     Call<Integer> getcinprobyfmail(@Query("email") String email);
     @FormUrlEncoded
     @POST("/prof/signup")
+
     Call<Void> addprof(@Field("cin") int cin,
                        @Field("nom") String nom,
                        @Field("prenom") String prenom,
                        @Field("gener") String gener,
                        @Field("email") String email,
                        @Field("password") String password);
+
+    Call<String> addprof(@Body Prof prof);
+    @FormUrlEncoded
     @POST("/prof/login")
-    Call<String> loginprof(@Body Prof prof);
+    Call<Void> loginprof(@Field("email") String email,
+                           @Field("password") String password);
     @DELETE("/profdelete/{cinprof/")
     Call<String> deletprof(@Path("cinprof") int cinprof);
 

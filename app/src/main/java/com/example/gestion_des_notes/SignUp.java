@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.gestion_des_notes.Activityadmin.ActivityProfReq;
 import com.example.gestion_des_notes.Models.Prof;
 import com.example.gestion_des_notes.Models.Prof_Req;
 import com.example.gestion_des_notes.Service.Apiapp;
@@ -26,8 +27,6 @@ public class SignUp extends AppCompatActivity {
     RadioGroup genderGroup, roleGroup;
     Button signUpButton;
     TextView loginLink;
-
-    // API Service
     Apiprofreq apiService;
 
     @Override
@@ -47,7 +46,7 @@ public class SignUp extends AppCompatActivity {
         loginLink = findViewById(R.id.log);
 
         loginLink.setOnClickListener(v -> {
-            Intent intent = new Intent(SignUp.this, Prof.class);
+            Intent intent = new Intent(SignUp.this, ActivityProfReq.class);
             startActivity(intent);
         });
 
@@ -61,8 +60,6 @@ public class SignUp extends AppCompatActivity {
         int cinNumber = Integer.parseInt(cin.getText().toString());
         String passwordText = password.getText().toString();
         String confirmPasswordText = confirmPassword.getText().toString();
-
-        // Validate inputs
         if (firstNameText.isEmpty() || lastNameText.isEmpty() || emailText.isEmpty() ||
                 cinNumber==0 || passwordText.isEmpty() || confirmPasswordText.isEmpty()) {
             Toast.makeText(this, "Veuillez remplir tous les champs.", Toast.LENGTH_SHORT).show();
