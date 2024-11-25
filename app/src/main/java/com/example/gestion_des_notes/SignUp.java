@@ -11,6 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.gestion_des_notes.Activityadmin.ActivityProfReq;
 import com.example.gestion_des_notes.Activityprof.Prof;
 
 public class SignUp extends AppCompatActivity {
@@ -29,7 +30,7 @@ public class SignUp extends AppCompatActivity {
         T.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(SignUp.this, Prof.class);
+                Intent i=new Intent(SignUp.this, ActivityProfReq.class);
                 startActivity(i);
             }
         });

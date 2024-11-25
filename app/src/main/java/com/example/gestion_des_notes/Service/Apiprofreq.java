@@ -17,6 +17,6 @@ public interface Apiprofreq {
     @POST("/profreq/signuprforeq")
     Call<String> addprofreq(@Body Prof_Req profReq);
     @DELETE("/profreq/delete/{cinprof}")
-    Call<String> deleteProfreq(@Path("cinprof") int cinprof);
+    Call<Void> deleteProfreq(@Path("cinprof") int cinprof);
 
 }
