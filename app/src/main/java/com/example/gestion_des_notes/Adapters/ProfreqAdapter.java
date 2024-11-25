@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gestion_des_notes.Activityadmin.ActivityProfReq;
 import com.example.gestion_des_notes.Models.Prof;
 import com.example.gestion_des_notes.Models.Prof_Req;
 import com.example.gestion_des_notes.R;
@@ -73,7 +74,8 @@ public class ProfreqAdapter extends RecyclerView.Adapter<ProfReqviewholder> {
                                 call1.enqueue(new Callback<Void>() {
                                     @Override
                                     public void onResponse(Call<Void> call, Response<Void> response) {
-
+                                        Intent i=new Intent(v.getContext(), ActivityProfReq.class);
+                                        ContextCompat.startActivity(v.getContext(),i,null);
                                     }
 
                                     @Override
@@ -100,6 +102,8 @@ public class ProfreqAdapter extends RecyclerView.Adapter<ProfReqviewholder> {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                     Toast.makeText(v.getContext(), "Enseignant a ete supprime" + profReq.getEmail(), Toast.LENGTH_SHORT).show();
+                                    Intent i=new Intent(v.getContext(), ActivityProfReq.class);
+                                    ContextCompat.startActivity(v.getContext(),i,null);
                             }
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
@@ -110,7 +114,7 @@ public class ProfreqAdapter extends RecyclerView.Adapter<ProfReqviewholder> {
                     }
                 });
 
-                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNeutralButton("Annuler", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

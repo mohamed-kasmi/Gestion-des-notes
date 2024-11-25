@@ -20,10 +20,10 @@ public class ProfReqviewholder extends RecyclerView.ViewHolder {
         temail=itemView.findViewById(R.id.emailprofreq);
     }
     public void bind(Prof_Req profReq){
-        tcin.setText(String.valueOf(profReq.getCin()));
-        tname.setText(profReq.getNom());
-        tlastname.setText(profReq.getPrenom());
-        temail.setText(profReq.getEmail());
+        tcin.setText("CIN: "+String.valueOf(profReq.getCin()));
+        tname.setText("Nom: "+profReq.getNom());
+        tlastname.setText("prenom: "+profReq.getPrenom());
+        temail.setText("Email: "+profReq.getEmail());
 
     }
 }
