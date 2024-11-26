@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     tools:context=".Activityadmin.ActivityEtud">
     <EditText
         android:layout_width="match_parent"
@@ -17,12 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tclasse"
-        android:hint="classe" />
+        android:hint="Classe" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:id="@+id/btnadd" />
+        android:text="Ajouter"
+        android:id="@+id/btnajoutetud" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

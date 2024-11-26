@@ -19,7 +19,7 @@ public interface Apietudiant {
     Call<List<Etudiant>> getalletud();
     @FormUrlEncoded
     @POST("/etudiant/addetudbyadmin")
-    Call<String> addetudbyadmin(@Field("cin") int cin,
+    Call<Void> addetudbyadmin(@Field("cin") int cin,
                                 @Field("classe") String classe);
     @FormUrlEncoded
     @POST("/etudiant/login")
@@ -27,8 +27,8 @@ public interface Apietudiant {
                            @Field("password") String password);
     @PUT("/etudiant/signup/{cin}")
     Call<String> signupetud(@Path("cin") int cin,@Body Etudiant etudiant);
-    @DELETE("/etudiant/delete/{cinetud")
-    Call<String> deletetud(@Path("cinetud") int cinetud);
+    @DELETE("/etudiant/delete/{cinetud}")
+    Call<Void> deletetud(@Path("cinetud") int cinetud);
 
 
 }
