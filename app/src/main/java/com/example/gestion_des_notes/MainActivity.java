@@ -1,6 +1,7 @@
 package com.example.gestion_des_notes;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -31,9 +32,11 @@ public class MainActivity extends AppCompatActivity {
     TextView T;
     EditText E1, E2;
     Button B;
-    RadioButton RaEtud,RaProf;
+    RadioButton RaEtud, RaProf;
     Apiprof apiService;
     Apietudiant apiServices;
+    SharedPreferences mPref;
+    int cinProf,cinEtudiant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,67 +51,78 @@ public class MainActivity extends AppCompatActivity {
         E1 = findViewById(R.id.Email);
         E2 = findViewById(R.id.Password);
         B = findViewById(R.id.buttonLogin);
-        RaEtud=findViewById(R.id.radioButtonEtudiant);
-        RaProf=findViewById(R.id.radioButtonEnseignant);
-        B.setOnClickListener(v -> {
-            String email = E1.getText().toString().trim();
-            String password = E2.getText().toString().trim();
-            if(email.equals("admin")&&password.equals("admin")) {
-                Intent i = new Intent(MainActivity.this, ActivityProfReq.class);
-                startActivity(i);
-            }else{
-                if (email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Remplir les champs", Toast.LENGTH_SHORT).show();
+        RaEtud = findViewById(R.id.radioButtonEtudiant);
+        RaProf = findViewById(R.id.radioButtonEnseignant);
+        B.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = E1.getText().toString().trim();
+                String password = E2.getText().toString().trim();
+                if (email.equals("admin") && password.equals("admin")) {
+                    Intent i = new Intent(MainActivity.this, ActivityProfReq.class);
+                    startActivity(i);
                 } else {
-                    if (RaProf.isChecked()){
-                        apiService = Apiapp.getClient().create(Apiprof.class);
-                        Call<Void> call = apiService.loginprof(email, password);
+                    if (email.isEmpty() || password.isEmpty()) {
+                        Toast.makeText(MainActivity.this, "Remplir les champs", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (RaProf.isChecked()) {
+                            apiService = Apiapp.getClient().create(Apiprof.class);
+                            Call<Void> call = apiService.loginprof(email, password);
 
-                        call.enqueue(new Callback<Void>() {
-                            @Override
-                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                if (response.isSuccessful()) {
-                                    Intent intent = new Intent(MainActivity.this, Home_prof.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Identifiants incorrects", Toast.LENGTH_SHORT).show();
+                            call.enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    if (response.isSuccessful()) {
+                                        Intent intent = new Intent(MainActivity.this, Home_prof.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(MainActivity.this, "Identifiants incorrects", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onFailure(Call<Void> call, Throwable t) {
-                                Toast.makeText(MainActivity.this, "Erreur de connexion : " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } else if (RaEtud.isChecked()) {
-                        apiServices = Apiapp.getClient().create(Apietudiant.class);
-                        Call<Void> call = apiServices.loginetud(email,password);
-                        call.enqueue(new Callback<Void>() {
-                            @Override
-                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                if (response.isSuccessful()) {
-                                    Intent i = new Intent(MainActivity.this, ActivityNoteEtud.class);
-                                    startActivity(i);
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Identifiants incorrects", Toast.LENGTH_SHORT).show();
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) {
+                                    Toast.makeText(MainActivity.this, "Erreur de connexion : " + t.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                            @Override
-                            public void onFailure(Call<Void> call, Throwable t) {
-                                Toast.makeText(MainActivity.this, "Erreur de connexion.", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }else{
-                        Toast.makeText(MainActivity.this, "Identifiants incorrects", Toast.LENGTH_SHORT).show();
+                            });
+                        } else if (RaEtud.isChecked()) {
+                            apiServices = Apiapp.getClient().create(Apietudiant.class);
+                            Call<Void> call = apiServices.loginetud(email, password);
+                            call.enqueue(new Callback<Void>() {
+                                @Override
+                                public void onResponse(Call<Void> call, Response<Void> response) {
+                                    if (response.isSuccessful()) {
+                                        Intent i = new Intent(MainActivity.this, ActivityNoteEtud.class);
+                                        startActivity(i);
+                                    } else {
+                                        Toast.makeText(MainActivity.this, "Identifiants incorrects", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<Void> call, Throwable t) {
+                                    Toast.makeText(MainActivity.this, "Erreur de connexion.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(MainActivity.this, "Identifiants incorrects", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
+
+                apiService = Apiapp.getClient().create(Apiprof.class);
+                Call<Integer> cinProf = apiService.getcinprobyfmail(email);
             }
         });
+
         T = findViewById(R.id.Text);
-        T.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, SignUp.class);
-            startActivity(intent);
+        T.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SignUp.class);
+                startActivity(intent);
+            }
         });
     }
 }

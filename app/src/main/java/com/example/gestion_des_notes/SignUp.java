@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.gestion_des_notes.Activityadmin.ActivityMatiere;
 import com.example.gestion_des_notes.Activityadmin.ActivityProfReq;
 import com.example.gestion_des_notes.Models.Etudiant;
-import com.example.gestion_des_notes.Models.Prof;
 import com.example.gestion_des_notes.Models.Prof_Req;
 import com.example.gestion_des_notes.Service.Apiapp;
 import com.example.gestion_des_notes.Service.Apietudiant;
@@ -38,6 +37,7 @@ public class SignUp extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+
         firstName = findViewById(R.id.FirstName);
         lastName = findViewById(R.id.LastName);
         email = findViewById(R.id.editTextEmail);
@@ -47,8 +47,9 @@ public class SignUp extends AppCompatActivity {
         genderGroup = findViewById(R.id.Gendre);
         roleGroup = findViewById(R.id.radioGroupRole);
         signUpButton = findViewById(R.id.buttonSignUp);
-        Rad=findViewById(R.id.radioButtonEtudiant);
+        Rad = findViewById(R.id.radioButtonEtudiant);
         loginLink = findViewById(R.id.log);
+<<<<<<< HEAD
 
         loginLink.setOnClickListener(v -> {
             Intent intent = new Intent(SignUp.this, ActivityMatiere.class);
@@ -128,6 +129,94 @@ public class SignUp extends AppCompatActivity {
                         Toast.makeText(SignUp.this, "Erreur de connexion.", Toast.LENGTH_SHORT).show();
                     }
                 });
+=======
+        loginLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUp.this, ActivityProfReq.class);
+                startActivity(intent);
+>>>>>>> 543d125b8cbc8ed7185af6154f35d79377fdd00e
             }
+        });
+        signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String firstNameText = firstName.getText().toString();
+                String lastNameText = lastName.getText().toString();
+                String emailText = email.getText().toString();
+                String cinText = cin.getText().toString();
+                String passwordText = password.getText().toString();
+                String confirmPasswordText = confirmPassword.getText().toString();
+                if (firstNameText.isEmpty() || lastNameText.isEmpty() || emailText.isEmpty() ||
+                        cinText.isEmpty() || passwordText.isEmpty() || confirmPasswordText.isEmpty()) {
+                    Toast.makeText(SignUp.this, "Veuillez remplir tous les champs.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (cinText.length() != 8 || !cinText.matches("\\d+")) {
+                    Toast.makeText(SignUp.this, "Le CIN doit contenir exactement 8 chiffres.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!passwordText.equals(confirmPasswordText)) {
+                    Toast.makeText(SignUp.this, "Les mots de passe ne correspondent pas.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                int selectedGenderId = genderGroup.getCheckedRadioButtonId();
+                RadioButton selectedGender = findViewById(selectedGenderId);
+                String gender = (selectedGender != null) ? selectedGender.getText().toString() : "";
+
+                int selectedRoleId = roleGroup.getCheckedRadioButtonId();
+                RadioButton selectedRole = findViewById(selectedRoleId);
+                String role = (selectedRole != null) ? selectedRole.getText().toString() : "";
+
+                if (selectedRole == null) {
+                    Toast.makeText(SignUp.this, "Veuillez sélectionner un rôle.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                int cinNumber = Integer.parseInt(cinText);
+                if (Rad.isChecked()) {
+                    apiServices = Apiapp.getClient().create(Apietudiant.class);
+                    Etudiant etud = new Etudiant(firstNameText, lastNameText, gender, emailText, passwordText);
+                    Call<Void> call = apiServices.signupetud(cinNumber, etud);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(SignUp.this, "Etudiant enregistré avec succès!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(SignUp.this, "Cet utilisateur existe déjà.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Toast.makeText(SignUp.this, "Erreur de connexion.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Prof_Req profReq = new Prof_Req(cinNumber, firstNameText, lastNameText, gender, emailText, passwordText);
+                    apiService = Apiapp.getClient().create(Apiprofreq.class);
+                    Call<Void> call = apiService.addprofreq(cinNumber, firstNameText, lastNameText, gender, emailText, passwordText);
+                    call.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(SignUp.this, "Professeur enregistré avec succès!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(SignUp.this, "Cet utilisateur existe déjà.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Toast.makeText(SignUp.this, "Erreur de connexion.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
     }
 }
