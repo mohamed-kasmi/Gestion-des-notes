@@ -14,9 +14,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gestion_des_notes.Activityadmin.ActivityProfReq;
+import com.example.gestion_des_notes.Models.Prof;
 import com.example.gestion_des_notes.Models.Prof_Req;
 import com.example.gestion_des_notes.R;
 import com.example.gestion_des_notes.Service.Apiapp;
+import com.example.gestion_des_notes.Service.Apiprof;
 import com.example.gestion_des_notes.Service.Apiprofreq;
 
 import java.util.List;
@@ -28,6 +31,7 @@ import retrofit2.Response;
 public class ProfreqAdapter extends RecyclerView.Adapter<ProfReqviewholder> {
     List<Prof_Req> list;
     Apiprofreq apiprofreq;
+    Apiprof apiprof;
     public ProfreqAdapter(List<Prof_Req> list) {
         this.list = list;
     }
@@ -58,8 +62,34 @@ public class ProfreqAdapter extends RecyclerView.Adapter<ProfReqviewholder> {
                 builder.setPositiveButton("Accepter", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        apiprofreq = Apiapp.getClient().create(Apiprofreq.class);
+                        apiprof = Apiapp.getClient().create(Apiprof.class);
+                        Call<Void> call= apiprof.addprof(profReq.getCin(), profReq.getNom(), profReq.getPrenom(),
+                                profReq.getGener(), profReq.getEmail(), profReq.getPassword());
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                Toast.makeText(v.getContext(), "Enseignant a ete ajoute" + profReq.getEmail(), Toast.LENGTH_SHORT).show();
+                                apiprofreq = Apiapp.getClient().create(Apiprofreq.class);
+                                Call<Void> call1 = apiprofreq.deleteProfreq(profReq.getCin());
+                                call1.enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                        Intent i=new Intent(v.getContext(), ActivityProfReq.class);
+                                        ContextCompat.startActivity(v.getContext(),i,null);
+                                    }
 
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Toast.makeText(v.getContext(), "Erreur" , Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
 
@@ -71,18 +101,20 @@ public class ProfreqAdapter extends RecyclerView.Adapter<ProfReqviewholder> {
                         call.enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
-                                    Toast.makeText(v.getContext(), "Enseignant" + profReq.getEmail(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(v.getContext(), "Enseignant a ete supprime" + profReq.getEmail(), Toast.LENGTH_SHORT).show();
+                                    Intent i=new Intent(v.getContext(), ActivityProfReq.class);
+                                    ContextCompat.startActivity(v.getContext(),i,null);
                             }
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
-                                Toast.makeText(v.getContext(), "Erreur" + profReq.getEmail(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(v.getContext(), "Erreur" , Toast.LENGTH_SHORT).show();
                             }
                         });
 
                     }
                 });
 
-                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNeutralButton("Annuler", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

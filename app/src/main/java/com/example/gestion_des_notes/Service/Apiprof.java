@@ -19,7 +19,16 @@ public interface Apiprof {
     Call<List<Prof>> getallprof();
     @GET("/prof/cin-by-email")
     Call<Integer> getcinprobyfmail(@Query("email") String email);
+    @FormUrlEncoded
     @POST("/prof/signup")
+
+    Call<Void> addprof(@Field("cin") int cin,
+                       @Field("nom") String nom,
+                       @Field("prenom") String prenom,
+                       @Field("gener") String gener,
+                       @Field("email") String email,
+                       @Field("password") String password);
+
     Call<String> addprof(@Body Prof prof);
     @FormUrlEncoded
     @POST("/prof/login")
