@@ -23,10 +23,10 @@ public interface Apietudiant {
                                 @Field("classe") String classe);
     @FormUrlEncoded
     @POST("/etudiant/login")
-    Call<String> loginetud(@Field("email") String email,
+    Call<Void> loginetud(@Field("email") String email,
                            @Field("password") String password);
     @PUT("/etudiant/signup/{cin}")
-    Call<String> signupetud(@Path("cin") int cin,@Body Etudiant etudiant);
+    Call<Void> signupetud(@Path("cin") int cin,@Body Etudiant etudiant);
     @DELETE("/etudiant/delete/{cinetud}")
     Call<Void> deletetud(@Path("cinetud") int cinetud);
 
