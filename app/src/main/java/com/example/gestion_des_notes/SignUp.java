@@ -97,7 +97,6 @@ public class SignUp extends AppCompatActivity {
                     Toast.makeText(SignUp.this, "This user alredy exist.", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Toast.makeText(SignUp.this, "Erreur de connexion.", Toast.LENGTH_SHORT).show();
