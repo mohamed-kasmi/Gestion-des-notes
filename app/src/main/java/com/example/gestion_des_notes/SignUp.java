@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.gestion_des_notes.Activityadmin.ActivityMatiere;
 import com.example.gestion_des_notes.Activityadmin.ActivityProfReq;
 import com.example.gestion_des_notes.Models.Etudiant;
 import com.example.gestion_des_notes.Models.Prof;
@@ -50,7 +51,7 @@ public class SignUp extends AppCompatActivity {
         loginLink = findViewById(R.id.log);
 
         loginLink.setOnClickListener(v -> {
-            Intent intent = new Intent(SignUp.this, ActivityProfReq.class);
+            Intent intent = new Intent(SignUp.this, ActivityMatiere.class);
             startActivity(intent);
         });
 

@@ -16,6 +16,12 @@ public class Matiere {
         this.cofi = cofi;
     }
 
+    public Matiere(String matiere, String classe, double cofi) {
+        this.matiere = matiere;
+        this.classe = classe;
+        this.cofi = cofi;
+    }
+
     public int getId() {
         return id;
     }

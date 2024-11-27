@@ -13,12 +13,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gestion_des_notes.Adapters.EtudAdapter;
+import com.example.gestion_des_notes.Adapters.MatiereAdapter;
+import com.example.gestion_des_notes.Models.Etudiant;
 import com.example.gestion_des_notes.Models.Matiere;
 import com.example.gestion_des_notes.R;
 import com.example.gestion_des_notes.Service.Apiapp;
 import com.example.gestion_des_notes.Service.Apimatiere;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +38,7 @@ RadioButton rit,rsem2,rsem3,rdsi2,rdsi3;
 EditText tmatiere,tcof;
 Button bajouter;
 RecyclerView recyclerView;
+ArrayList<Matiere> list=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +94,26 @@ RecyclerView recyclerView;
                         Toast.makeText(ActivityMatiere.this, "Erreur de connexion.", Toast.LENGTH_SHORT).show();
                     }
                 });
+
             }
         });
+        recyclerView=findViewById(R.id.recycleretud);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        apimatiere = Apiapp.getClient().create(Apimatiere.class);
+        Call<List<Matiere>> call=apimatiere.getallmatiere();
+        call.enqueue(new Callback<List<Matiere>>() {
+            @Override
+            public void onResponse(Call<List<Matiere>> call, Response<List<Matiere>> response) {
+                list= (ArrayList<Matiere>) response.body();
+                MatiereAdapter matiereAdapter= new MatiereAdapter(list);
+                recyclerView.setAdapter(matiereAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Matiere>> call, Throwable t) {
+                Toast.makeText(ActivityMatiere.this, "Erreur de connexion", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }
