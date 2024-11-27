@@ -45,6 +45,26 @@
         android:inputType="textPassword"
         android:padding="10dp"
         android:layout_marginBottom="16dp" />
+    <RadioGroup
+        android:id="@+id/radioGroupRole"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="16dp">
+
+        <RadioButton
+            android:id="@+id/radioButtonEtudiant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Étudiant" />
+
+        <RadioButton
+            android:id="@+id/radioButtonEnseignant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enseignant" />
+    </RadioGroup>
 
     <!-- Radio Button for Stay Connected -->
     <LinearLayout

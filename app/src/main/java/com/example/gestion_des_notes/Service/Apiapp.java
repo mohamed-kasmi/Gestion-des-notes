@@ -4,7 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Apiapp {
-    public static  String BASE_URL="http://192.168.169.55:8090"; //emulator addres 10.0.2.2
+    public static  String BASE_URL="http://192.168.27.88:8090"; //emulator addres 10.0.2.2
     private static Retrofit retrofit;
     public static Retrofit getClient(){
 

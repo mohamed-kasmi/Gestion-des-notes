@@ -87,6 +87,7 @@
             android:id="@+id/Cin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLength="8"
             android:hint="CIN"
             android:inputType="number"
             android:padding="10dp"
