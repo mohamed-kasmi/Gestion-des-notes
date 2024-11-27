@@ -49,7 +49,7 @@ public class SignUp extends AppCompatActivity {
         signUpButton = findViewById(R.id.buttonSignUp);
         Rad = findViewById(R.id.radioButtonEtudiant);
         loginLink = findViewById(R.id.log);
-<<<<<<< HEAD
+
 
         loginLink.setOnClickListener(v -> {
             Intent intent = new Intent(SignUp.this, ActivityMatiere.class);
@@ -129,13 +129,13 @@ public class SignUp extends AppCompatActivity {
                         Toast.makeText(SignUp.this, "Erreur de connexion.", Toast.LENGTH_SHORT).show();
                     }
                 });
-=======
+
         loginLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignUp.this, ActivityProfReq.class);
                 startActivity(intent);
->>>>>>> 543d125b8cbc8ed7185af6154f35d79377fdd00e
+
             }
         });
         signUpButton.setOnClickListener(new View.OnClickListener() {
@@ -219,4 +219,4 @@ public class SignUp extends AppCompatActivity {
             }
         });
     }
-}
+}}
