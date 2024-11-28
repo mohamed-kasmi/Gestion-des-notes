@@ -20,15 +20,7 @@
             android:exported="false" />
         <activity
             android:name=".Activityadmin.ActivityMatiere"
-<<<<<<< HEAD
             android:exported="false" />
-=======
-
-            android:exported="false" />
-
-
-
->>>>>>> 4013ea2c43b2ffb26f68347420b437864c959d9b
         <activity
             android:name=".Activityadmin.ActivityEtud"
             android:exported="false" />

@@ -25,17 +25,14 @@ public interface Apimatiere {
     Call<Void> addmatiere(@Field("matiere") String matiere,
                           @Field("classe") String session,
                           @Field("cof") Double cof);
-<<<<<<< HEAD
     @FormUrlEncoded
     @PUT("matiere/update")
     Call<Void> updatematiere(@Field("matiere") String matiere,
                              @Field("classe") String session,
                              @Field("cofDouble") Double cof);
-=======
 
     @PUT("/matiere/updatematiere/{idmatiere}")
     Call<Void> updatematiere(@Path("idmatiere") int idmatiere,@Body Matiere matiere);
->>>>>>> 4013ea2c43b2ffb26f68347420b437864c959d9b
     @DELETE("/matiere/delete/{idmatiere}")
     Call<Void> deletematiere(@Path("idmatiere") int idmatiere);
 }
