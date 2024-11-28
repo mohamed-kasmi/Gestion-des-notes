@@ -18,6 +18,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.gestion_des_notes.Activityadmin.ActivityProfReq;
 import com.example.gestion_des_notes.Activityetud.ActivityNoteEtud;
+import com.example.gestion_des_notes.Activityprof.ActivityAddnote;
+import com.example.gestion_des_notes.Activityprof.ActivityProfnote;
 import com.example.gestion_des_notes.Activityprof.Home_prof;
 import com.example.gestion_des_notes.Models.Etudiant;
 import com.example.gestion_des_notes.Service.Apiapp;
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         T.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SignUp.class);
+                Intent intent = new Intent(MainActivity.this, ActivityAddnote.class);
                 startActivity(intent);
             }
         });

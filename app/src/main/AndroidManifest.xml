@@ -32,13 +32,13 @@
             android:name=".Activityadmin.ActivityProfReq"
             android:exported="false" />
         <activity
-            android:name=".Activityprof.Add_note"
+            android:name=".Activityprof.ActivityAddnote"
             android:exported="false" />
         <activity
             android:name=".Activityprof.Home_prof"
             android:exported="false" />
         <activity
-            android:name=".Activityprof.Prof"
+            android:name=".Activityprof.ActivityProfnote"
             android:exported="false" />
         <activity
             android:name=".SignUp"

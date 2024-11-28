@@ -53,7 +53,7 @@ public class Home_prof extends AppCompatActivity {
                 startActivity(i);
                 return true;
             } else if (item.getItemId() == R.id.addnote) {
-                Intent i=new Intent(Home_prof.this, Add_note.class);
+                Intent i=new Intent(Home_prof.this, ActivityAddnote.class);
                 startActivity(i);
             } else if (item.getItemId() == R.id.logout) {
                 Intent i=new Intent(Home_prof.this, MainActivity.class);

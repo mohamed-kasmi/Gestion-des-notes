@@ -5,15 +5,28 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".Activityetud.ActivityNoteEtud">
-    <TextView
-        android:id="@+id/Title"
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Gestion des notes"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:layout_marginBottom="24dp" />
+        android:id="@+id/serchnoteetud"
+        android:hint="Nom matiere"
+        android:inputType="text"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchmatiereetud"
+        android:text="Cherche"
+        android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycleretudnote"/>
+    </LinearLayout>
 
 </LinearLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activityprof.Prof">
+    tools:context=".Activityprof.ActivityProfnote">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -15,9 +15,46 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:layout_marginTop="25dp"/>
 
-    <TextView
+    <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ADD NOTE"/>
+        android:orientation="horizontal"
+        android:id="@+id/radioSection">
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Section1"
+            android:layout_weight="1"
+            android:text="IT"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Section2"
+            android:layout_weight="1"
+            android:text="DSI2"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Section3"
+            android:layout_weight="1"
+            android:text="DSI3"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Section4"
+            android:layout_weight="1"
+            android:text="SEM2"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Section5"
+            android:layout_weight="1"
+            android:text="SEM3"/>
+    </RadioGroup>
+    <Spinner
+        android:id="@+id/mySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         />
 
 </LinearLayout>

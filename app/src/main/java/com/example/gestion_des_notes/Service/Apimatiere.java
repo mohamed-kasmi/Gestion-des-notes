@@ -19,7 +19,7 @@ public interface Apimatiere {
     @GET("/matiere/getallmat")
     Call<List<Matiere>> getallmatiere();
     @GET("/matiere/matierebyclasse")
-    Call<List<Matiere>> getmatierebyclasse(@Body Matiere matiere);
+    Call<List<String>> getmatierebyclasse(@Query("classe") String classe);
     @FormUrlEncoded
     @POST("/matiere/addmatiere")
     Call<Void> addmatiere(@Field("matiere") String matiere,
