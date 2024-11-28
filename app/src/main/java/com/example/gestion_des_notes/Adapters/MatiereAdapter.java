@@ -75,14 +75,14 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereViewholder> {
                         String cofii=cofi.getText().toString();
                         if (matt.isEmpty() || section.isEmpty() || cofii.isEmpty()) {
                             // Show a Toast if any of the fields are empty
-                            Toast.makeText(v.getContext(), "Please fill in all fields.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(v.getContext(), "verifier tous les champes.", Toast.LENGTH_SHORT).show();
                         }else {
                         double cofDouble = Double.parseDouble(cofii);
 
-                        Matiere matiere1=new Matiere("aaa","aaa",55.5);
+                        Matiere matiere1=new Matiere(matt,section,cofDouble);
                         apimatiere=Apiapp.getClient().create(Apimatiere.class);
                         int idmatiere=matiere.getId();
-                        Call<Void> call=apimatiere.updatematiere(6,matiere1);
+                        Call<Void> call=apimatiere.updatematiere(idmatiere,matiere1);
                         call.enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
