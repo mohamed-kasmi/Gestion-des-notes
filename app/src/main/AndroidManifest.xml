@@ -16,19 +16,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-<<<<<<< HEAD
             android:name=".Activityetud.ActivityNoteEtud"
             android:exported="false" />
         <activity
             android:name=".Activityadmin.ActivityMatiere"
-=======
-
-            android:name=".Activityadmin.ActivityMatiere"
-            android:exported="false" />
-        <activity
-
-            android:name=".Activityetud.ActivityNoteEtud"
->>>>>>> 543d125b8cbc8ed7185af6154f35d79377fdd00e
             android:exported="false" />
         <activity
             android:name=".Activityadmin.ActivityEtud"

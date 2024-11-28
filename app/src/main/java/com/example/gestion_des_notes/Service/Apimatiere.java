@@ -26,8 +26,10 @@ public interface Apimatiere {
                           @Field("classe") String session,
                           @Field("cof") Double cof);
     @FormUrlEncoded
-    @PUT("/matiere/updatematiere/{idmatiere}")
-    Call<Void> updatematiere(@Path("idmatiere") int idmatiere,@Body Matiere matiere);
+    @PUT("matiere/update")
+    Call<Void> updatematiere(@Field("matiere") String matiere,
+                             @Field("classe") String session,
+                             @Field("cofDouble") Double cof);
     @DELETE("/matiere/delete/{idmatiere}")
     Call<Void> deletematiere(@Path("idmatiere") int idmatiere);
 }
