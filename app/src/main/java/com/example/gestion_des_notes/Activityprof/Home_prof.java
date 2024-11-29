@@ -22,10 +22,11 @@ public class Home_prof extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home_prof);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Handle menu item clicks using a standard listener
+        // Set menu item click listener
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(android.view.MenuItem item) {
@@ -46,39 +47,37 @@ public class Home_prof extends AppCompatActivity {
     }
 
     private void showPopupMenu(View anchor) {
-        // Create a PopupMenu anchored to the clicked view
         PopupMenu popupMenu = new PopupMenu(this, anchor);
 
         // Inflate the menu for the popup
         popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
         popupMenu.setGravity(Gravity.END);
 
-        // Handle menu item clicks using standard listener
+        // Set menu item click listener for the popup
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(android.view.MenuItem item) {
                 if (item.getItemId() == R.id.home) {
-                    // Navigate to Home_prof
+                    // Navigate to Home_prof activity
                     Intent i = new Intent(Home_prof.this, Home_prof.class);
                     startActivity(i);
                     return true;
                 } else if (item.getItemId() == R.id.addnote) {
-                    // Navigate to Add_note
-                    Intent i = new Intent(Home_prof.this, Add_note.class);
+                    // Navigate to ActivityAddnote
+                    Intent i = new Intent(Home_prof.this, ActivityAddnote.class);
                     startActivity(i);
                     return true;
                 } else if (item.getItemId() == R.id.logout) {
-                    // Logout logic: clear "STAY_CONNECTED" from SharedPreferences
+                    // Clear STAY_CONNECTED flag and navigate to MainActivity
                     SharedPreferences sp = getSharedPreferences("UserPref", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sp.edit();
-                    editor.putBoolean("STAY_CONNECTED", false); // Set STAY_CONNECTED to false
+                    editor.putBoolean("STAY_CONNECTED", false);
                     editor.apply();
 
-                    // Navigate back to MainActivity
                     Intent i = new Intent(Home_prof.this, MainActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear the back stack
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
-                    finish(); // Close the current activity
+                    finish();
                     return true;
                 }
                 return false;

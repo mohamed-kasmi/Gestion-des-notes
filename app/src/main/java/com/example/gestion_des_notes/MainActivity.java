@@ -18,6 +18,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.gestion_des_notes.Activityadmin.ActivityProfReq;
 import com.example.gestion_des_notes.Activityetud.ActivityNoteEtud;
+import com.example.gestion_des_notes.Activityprof.ActivityAddnote;
+import com.example.gestion_des_notes.Activityprof.ActivityProfnote;
 import com.example.gestion_des_notes.Activityprof.Home_prof;
 import com.example.gestion_des_notes.Service.Apiapp;
 import com.example.gestion_des_notes.Service.Apietudiant;
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         T.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SignUp.class);
+                Intent intent = new Intent(MainActivity.this, ActivityAddnote.class);
                 startActivity(intent);
             }
         });
@@ -119,9 +121,11 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String cinProf = String.valueOf(response.body());
+                    SharedPreferences.Editor editor = mPref.edit();
+                    editor.putString("CIN", cinProf);
+                    editor.apply();
                     if (Checked.isChecked()) {
-                        SharedPreferences.Editor editor = mPref.edit();
-                        editor.putString("CIN", cinProf);
+
                         editor.putBoolean("STAY_CONNECTED", true);
                         editor.apply();
                     }
@@ -167,9 +171,11 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     cinEtud = String.valueOf(response.body());
+                    SharedPreferences.Editor editor = mPref.edit();
+                    editor.putString("CIN_ETUD", cinEtud);
+                    editor.apply();
                     if (Checked.isChecked()) {
-                        SharedPreferences.Editor editor = mPref.edit();
-                        editor.putString("CIN_ETUD", cinEtud);
+
                         editor.putBoolean("STAY_CONNECTED", true);
                         editor.apply();
                     }

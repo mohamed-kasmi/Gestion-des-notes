@@ -98,9 +98,22 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereViewholder> {
                     }
                 });
 
-                builder.setNegativeButton("Rfuser", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("Supprimer", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        apimatiere=Apiapp.getClient().create(Apimatiere.class);
+                        Call<Void> call=apimatiere.deletematiere(matiere.getId());
+                        call.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                Toast.makeText(v.getContext(), "Matiere a ete supprime.", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                Toast.makeText(v.getContext(), "Erreur de connexion", Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                     }
                 });

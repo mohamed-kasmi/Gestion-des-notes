@@ -1,12 +1,10 @@
 package com.example.gestion_des_notes.Service;
 
-import com.example.gestion_des_notes.Activityprof.Prof;
 import com.example.gestion_des_notes.Models.Prof_Req;
 
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
