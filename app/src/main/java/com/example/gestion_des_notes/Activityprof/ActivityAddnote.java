@@ -6,8 +6,11 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -22,6 +25,7 @@ import com.example.gestion_des_notes.Models.Matiere;
 import com.example.gestion_des_notes.R;
 import com.example.gestion_des_notes.Service.Apiapp;
 import com.example.gestion_des_notes.Service.Apimatiere;
+import com.example.gestion_des_notes.Service.Apinotes;
 
 import java.util.List;
 
@@ -30,9 +34,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ActivityAddnote extends AppCompatActivity {
-RadioButton rit1,rdsi2,rdsi3,rsem2,rsem3;
+RadioButton rit1,rdsi2,rdsi3,rsem2,rsem3,typetp,typeds,typeex;
 Spinner spinner;
 Apimatiere apimatiere;
+Apinotes apinotes;
+EditText cinetud,noteajouter,classe;
+Button button;
+private String selectedOption;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -53,37 +61,118 @@ Apimatiere apimatiere;
             }
             return false;
         });
+        apimatiere= Apiapp.getClient().create(Apimatiere.class);
+        apinotes= Apiapp.getClient().create(Apinotes.class);
         rit1=findViewById(R.id.Section1);
         rdsi2=findViewById(R.id.Section2);
+        rdsi3=findViewById(R.id.Section3);
+        rsem2=findViewById(R.id.Section4);
+        rsem3=findViewById(R.id.Section5);
+        typetp=findViewById(R.id.type2);
+        typeds=findViewById(R.id.type1);
+        typeex=findViewById(R.id.type3);
+        button=findViewById(R.id.addnotebtn);
+        cinetud=findViewById(R.id.addnotecinetud);
+        classe=findViewById(R.id.addnoteclasse);
+        noteajouter=findViewById(R.id.addnotenote);
         spinner = findViewById(R.id.mySpinner);
-        apimatiere= Apiapp.getClient().create(Apimatiere.class);
+
 
         rit1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                String section="";
                 if(rit1.isChecked()){
-                    section="IT";
+                    fetchAndPopulateSpinner("IT");
+               }
+            }
+        });
+        rdsi2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(rdsi2.isChecked())
+                    fetchAndPopulateSpinner("DSI2");
+            }
+        });
+        rdsi3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(rdsi2.isChecked())
+                    fetchAndPopulateSpinner("DSI3");
+            }
+        });
+        rsem2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(rdsi2.isChecked())
+                    fetchAndPopulateSpinner("SEM2");
+            }
+        });
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Store the selected option in the class-level variable
+                selectedOption = parent.getItemAtPosition(position).toString();
 
-                Call<List<String>> call=apimatiere.getmatierebyclasse("DSI2");
-                call.enqueue(new Callback<List<String>>() {
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Handle the case when no item is selected (optional)
+                Toast.makeText(ActivityAddnote.this, "No item selected", Toast.LENGTH_SHORT).show();
+            }
+        });
+        rsem3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(rdsi2.isChecked())
+                    fetchAndPopulateSpinner("SEM3");
+            }
+        });
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int note=Integer.parseInt(noteajouter.getText().toString());
+                int cin=Integer.parseInt(cinetud.getText().toString());
+                String classee=classe.getText().toString();
+                String typee="";
+                if (typetp.isChecked()){  typee="TP";}
+                if (typeds.isChecked()){ typee="DS";}
+                if (typeex.isChecked()){ typee="EX";}
+                Call<Void> call=apinotes.addnote(cin,223322,selectedOption,classee,typee,note);
+                call.enqueue(new Callback<Void>() {
                     @Override
-                    public void onResponse(Call<List<String>> call, Response<List<String>> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            updateSpinner(response.body());
-                        } else {
-                            Toast.makeText(ActivityAddnote.this, "Failed to load options", Toast.LENGTH_SHORT).show();
-                        }
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        Toast.makeText(ActivityAddnote.this, "Note a ete ajouter.", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onFailure(Call<List<String>> call, Throwable t) {
+                    public void onFailure(Call<Void> call, Throwable t) {
                         Toast.makeText(ActivityAddnote.this, "Erreur de connexion.", Toast.LENGTH_SHORT).show();
                     }
-                });}
+                });
+
             }
         });
 
+    }
+    private void fetchAndPopulateSpinner(String section){
+
+        Call<List<String>> call=apimatiere.getmatierebyclasse(section);
+        call.enqueue(new Callback<List<String>>() {
+            @Override
+            public void onResponse(Call<List<String>> call, Response<List<String>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    updateSpinner(response.body());
+                } else {
+                    Toast.makeText(ActivityAddnote.this, "Failed to load options", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<String>> call, Throwable t) {
+                Toast.makeText(ActivityAddnote.this, "Erreur de connexion.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     private void updateSpinner(List<String> options) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(

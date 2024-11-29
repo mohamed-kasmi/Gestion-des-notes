@@ -14,14 +14,21 @@
         android:background="?attr/colorPrimary"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:layout_marginTop="25dp"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addnotecinetud"
+        android:inputType="number"
+        android:hint="CIN Etrudinat"
+        />
 
     <RadioGroup
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:id="@+id/radioSection">
         <RadioButton
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/Section1"
             android:layout_weight="1"
@@ -56,5 +63,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
          />
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/radiotype">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/type1"
+            android:layout_weight="1"
+            android:text="DS"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/type2"
+            android:layout_weight="1"
+            android:text="TP"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/type3"
+            android:layout_weight="1"
+            android:text="EX"/>
+
+    </RadioGroup>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addnoteclasse"
+        android:hint="Classe"
+        />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/addnotenote"
+        android:inputType="numberDecimal"
+        android:hint="Note"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Ajouter"
+        android:id="@+id/addnotebtn"/>
 
 </LinearLayout>

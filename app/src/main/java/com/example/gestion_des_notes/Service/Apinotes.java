@@ -9,6 +9,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -26,8 +27,14 @@ public interface Apinotes {
     Call<List<Notes>> getallbycinetudandmatiere(@Query("cinetud") int cinetud,@Query("matiere") String matiere);
     @GET("/note/shearchaddnote")
     Call<List<Notes>> findbycinetud(@Query("cinetud") int cinetud,@Query("cinprof") int cinprof);
+    @FormUrlEncoded
     @POST("/note/addnotes")
-    Call<String> addnote(@Body Notes notes);
+    Call<Void> addnote( @Field("cinetud") int cinetud,
+                        @Field("cinprof") int cinprof,
+                        @Field("matiere") String matiere,
+                        @Field("classe") String classe,
+                        @Field("type") String type,
+                        @Field("note") double note);
     @PUT("/note/updateNote/{id}")
     Call<Void> updatenote(@Path("id") int id,@Body Notes NOTES);
     @DELETE("/note/delete/{id}")
