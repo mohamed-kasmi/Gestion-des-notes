@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.gestion_des_notes.Activityadmin.ActivityMatiere;
 import com.example.gestion_des_notes.Activityadmin.ActivityProfReq;
 import com.example.gestion_des_notes.Models.Etudiant;
 import com.example.gestion_des_notes.Models.Prof_Req;
@@ -49,104 +48,24 @@ public class SignUp extends AppCompatActivity {
         signUpButton = findViewById(R.id.buttonSignUp);
         Rad = findViewById(R.id.radioButtonEtudiant);
         loginLink = findViewById(R.id.log);
-
-
-        loginLink.setOnClickListener(v -> {
-            Intent intent = new Intent(SignUp.this, ActivityMatiere.class);
-            startActivity(intent);
-        });
-
-        signUpButton.setOnClickListener(v -> handleSignUp());
-    }
-
-    private void handleSignUp() {
-        String firstNameText = firstName.getText().toString();
-        String lastNameText = lastName.getText().toString();
-        String emailText = email.getText().toString();
-        int cinNumber = Integer.parseInt(cin.getText().toString());
-        String passwordText = password.getText().toString();
-        String confirmPasswordText = confirmPassword.getText().toString();
-        if (firstNameText.isEmpty() || lastNameText.isEmpty() || emailText.isEmpty()
-                || passwordText.isEmpty() || confirmPasswordText.isEmpty()||String.valueOf(cinNumber).length()!=8) {
-            Toast.makeText(this, "Veuillez remplir tous les champs.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (!passwordText.equals(confirmPasswordText)) {
-            Toast.makeText(this, "Les mots de passe ne correspondent pas.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        int selectedGenderId = genderGroup.getCheckedRadioButtonId();
-        RadioButton selectedGender = findViewById(selectedGenderId);
-        String gender = (selectedGender != null) ? selectedGender.getText().toString() : "";
-
-        int selectedRoleId = roleGroup.getCheckedRadioButtonId();
-        RadioButton selectedRole = findViewById(selectedRoleId);
-        String Role = (selectedRole != null) ? selectedRole.getText().toString() : "";
-
-        if (selectedRole == null) {
-            Toast.makeText(this, "Veuillez sélectionner un rôle.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if(Rad.isChecked()){
-            apiServices = Apiapp.getClient().create(Apietudiant.class);
-            Etudiant etud=new Etudiant(firstNameText,lastNameText,gender,emailText,passwordText);
-            Call<Void> call = apiServices.signupetud(cinNumber,etud);
-            call.enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if (response.isSuccessful()) {
-                        Toast.makeText(SignUp.this, "Etudiant enregistré avec succès!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(SignUp.this, "This user alredy exist.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(SignUp.this, "Erreur de connexion.", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }else{
-
-                Prof_Req profReq = new Prof_Req(cinNumber,firstNameText,lastNameText,gender,emailText,passwordText);
-
-
-                apiService = Apiapp.getClient().create(Apiprofreq.class);
-                Call<Void> call = apiService.addprofreq(cinNumber,firstNameText,lastNameText,gender,emailText,passwordText);
-                call.enqueue(new Callback<Void>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(SignUp.this, "Prof enregistré avec succès!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(SignUp.this, "This user alredy exist.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable t) {
-                        Toast.makeText(SignUp.this, "Erreur de connexion.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
         loginLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SignUp.this, ActivityProfReq.class);
                 startActivity(intent);
-
             }
         });
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String firstNameText = firstName.getText().toString();
-                String lastNameText = lastName.getText().toString();
-                String emailText = email.getText().toString();
-                String cinText = cin.getText().toString();
-                String passwordText = password.getText().toString();
-                String confirmPasswordText = confirmPassword.getText().toString();
+                String firstNameText = firstName.getText().toString().trim();
+                String lastNameText = lastName.getText().toString().trim();
+                String emailText = email.getText().toString().trim();
+                String cinText = cin.getText().toString().trim();
+                String passwordText = password.getText().toString().trim();
+                String confirmPasswordText = confirmPassword.getText().toString().trim();
+
+                // Validate input fields
                 if (firstNameText.isEmpty() || lastNameText.isEmpty() || emailText.isEmpty() ||
                         cinText.isEmpty() || passwordText.isEmpty() || confirmPasswordText.isEmpty()) {
                     Toast.makeText(SignUp.this, "Veuillez remplir tous les champs.", Toast.LENGTH_SHORT).show();
@@ -219,4 +138,4 @@ public class SignUp extends AppCompatActivity {
             }
         });
     }
-}}
+}

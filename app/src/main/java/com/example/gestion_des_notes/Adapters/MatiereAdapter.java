@@ -74,7 +74,6 @@ public class MatiereAdapter extends RecyclerView.Adapter<MatiereViewholder> {
                         String section=ses.getText().toString();
                         String cofii=cofi.getText().toString();
                         if (matt.isEmpty() || section.isEmpty() || cofii.isEmpty()) {
-                            // Show a Toast if any of the fields are empty
                             Toast.makeText(v.getContext(), "verifier tous les champes.", Toast.LENGTH_SHORT).show();
                         }else {
                         double cofDouble = Double.parseDouble(cofii);

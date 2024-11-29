@@ -13,6 +13,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface Apietudiant {
     @GET("/etudiant/getalletud")
@@ -25,6 +26,8 @@ public interface Apietudiant {
     @POST("/etudiant/login")
     Call<Void> loginetud(@Field("email") String email,
                            @Field("password") String password);
+    @GET("/etudiant/cin-by-email")
+    Call<Integer> getCinEtudByEmail(@Query("email") String email);
     @PUT("/etudiant/signup/{cin}")
     Call<Void> signupetud(@Path("cin") int cin,@Body Etudiant etudiant);
     @DELETE("/etudiant/delete/{cinetud}")
