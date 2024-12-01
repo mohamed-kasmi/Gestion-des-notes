@@ -1,18 +1,31 @@
 package com.example.gestion_des_notes.Activityadmin;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gestion_des_notes.Activityetud.ActivityNoteEtud;
+import com.example.gestion_des_notes.Activityprof.ActivityAddnote;
+import com.example.gestion_des_notes.Activityprof.ActivityProfnote;
+import com.example.gestion_des_notes.Activityprof.Home_prof;
 import com.example.gestion_des_notes.Adapters.ProfreqAdapter;
+import com.example.gestion_des_notes.MainActivity;
 import com.example.gestion_des_notes.Models.Prof;
 import com.example.gestion_des_notes.Models.Prof_Req;
 import com.example.gestion_des_notes.R;
@@ -35,6 +48,15 @@ public class ActivityProfReq extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_prof_req);
+        Toolbar toolbar = findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_your_icon2) {
+                showPopupMenu(findViewById(R.id.toolbar2));
+                return true;
+            }
+            return false;
+        });
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -58,5 +80,44 @@ public class ActivityProfReq extends AppCompatActivity {
                 Toast.makeText(ActivityProfReq.this, "Error Fetching Data!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menuadmin, menu);
+        return true;
+    }
+    private void showPopupMenu(View anchor) {
+        PopupMenu popupMenuadmin = new PopupMenu(this, anchor);
+        popupMenuadmin.getMenuInflater().inflate(R.menu.popup_menuadmin, popupMenuadmin.getMenu());
+        popupMenuadmin.setGravity(Gravity.END);
+
+        popupMenuadmin.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.etud) {
+                    Intent i = new Intent(ActivityProfReq.this, ActivityEtud.class);
+                    startActivity(i);
+                    return true;
+                } else if (item.getItemId() == R.id.mat) {
+                    Intent i = new Intent(ActivityProfReq.this, ActivityMatiere.class);
+                    startActivity(i);
+                    return true;
+                } else if (item.getItemId() == R.id.prof) {
+                    Intent i = new Intent(ActivityProfReq.this, ActivityProfReq.class);
+                    startActivity(i);
+                    return true;
+                } else if (item.getItemId() == R.id.logout1) {
+                    Intent i = new Intent(ActivityProfReq.this, MainActivity.class);
+                    startActivity(i);
+                    return true;
+                }
+                return false;
+            }
+
+
+        });
+
+        popupMenuadmin.show();
     }
 }

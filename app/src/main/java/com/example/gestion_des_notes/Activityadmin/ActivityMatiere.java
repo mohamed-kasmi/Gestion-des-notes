@@ -1,23 +1,32 @@
 package com.example.gestion_des_notes.Activityadmin;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.gestion_des_notes.Activityetud.ActivityNoteEtud;
 import com.example.gestion_des_notes.Adapters.EtudAdapter;
 import com.example.gestion_des_notes.Adapters.MatiereAdapter;
+import com.example.gestion_des_notes.MainActivity;
 import com.example.gestion_des_notes.Models.Etudiant;
 import com.example.gestion_des_notes.Models.Matiere;
 import com.example.gestion_des_notes.R;
@@ -44,6 +53,15 @@ ArrayList<Matiere> list=new ArrayList<>();
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_matiere);
+        Toolbar toolbar = findViewById(R.id.toolbar3);
+        setSupportActionBar(toolbar);
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_your_icon2) {
+                showPopupMenu(findViewById(R.id.toolbar3));
+                return true;
+            }
+            return false;
+        });
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -115,5 +133,45 @@ ArrayList<Matiere> list=new ArrayList<>();
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menuadmin, menu);
+        return true;
+    }
+
+    private void showPopupMenu(View anchor) {
+        PopupMenu popupMenuadmin = new PopupMenu(this, anchor);
+        popupMenuadmin.getMenuInflater().inflate(R.menu.popup_menuadmin, popupMenuadmin.getMenu());
+        popupMenuadmin.setGravity(Gravity.END);
+
+        popupMenuadmin.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.etud) {
+                    Intent i = new Intent(ActivityMatiere.this, ActivityEtud.class);
+                    startActivity(i);
+                    return true;
+                } else if (item.getItemId() == R.id.mat) {
+                    Intent i = new Intent(ActivityMatiere.this, ActivityMatiere.class);
+                    startActivity(i);
+                    return true;
+                } else if (item.getItemId() == R.id.prof) {
+                    Intent i = new Intent(ActivityMatiere.this, ActivityProfReq.class);
+                    startActivity(i);
+                    return true;
+                } else if (item.getItemId() == R.id.logout1) {
+                    Intent i = new Intent(ActivityMatiere.this, MainActivity.class);
+                    startActivity(i);
+                    return true;
+                }
+                return false;
+            }
+
+
+        });
+
+        popupMenuadmin.show();
     }
 }

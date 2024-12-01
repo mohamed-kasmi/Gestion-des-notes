@@ -26,7 +26,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/emailprofreq"
         android:textSize="25dp"
-        android:text="test"/>
+        android:text="test"
+        android:layout_marginBottom="20dp"/>
 
 
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.example.gestion_des_notes.Activityprof;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -96,15 +97,22 @@ private String selectedOption;
         rdsi3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(rdsi2.isChecked())
+                if(rdsi3.isChecked())
                     fetchAndPopulateSpinner("DSI3");
             }
         });
         rsem2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(rdsi2.isChecked())
+                if(rsem2.isChecked())
                     fetchAndPopulateSpinner("SEM2");
+            }
+        });
+        rsem3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(rsem3.isChecked())
+                    fetchAndPopulateSpinner("SEM3");
             }
         });
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -121,13 +129,6 @@ private String selectedOption;
                 Toast.makeText(ActivityAddnote.this, "No item selected", Toast.LENGTH_SHORT).show();
             }
         });
-        rsem3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(rdsi2.isChecked())
-                    fetchAndPopulateSpinner("SEM3");
-            }
-        });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,7 +139,11 @@ private String selectedOption;
                 if (typetp.isChecked()){  typee="TP";}
                 if (typeds.isChecked()){ typee="DS";}
                 if (typeex.isChecked()){ typee="EX";}
-                Call<Void> call=apinotes.addnote(cin,223322,selectedOption,classee,typee,note);
+                SharedPreferences sp=getSharedPreferences("UserPref",MODE_PRIVATE);
+                String CinP=sp.getString("CIN",null);
+
+                int Cin2=Integer.parseInt(CinP);
+                Call<Void> call=apinotes.addnote(cin,Cin2,selectedOption,classee,typee,note);/////////////////////////////////////////////////////////////////////////
                 call.enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -201,7 +206,11 @@ private String selectedOption;
                 Intent i=new Intent(ActivityAddnote.this, Home_prof.class);
                 startActivity(i);
                 return true;
-            } else if (item.getItemId() == R.id.addnote) {
+            } else if (item.getItemId() == R.id.Profnote) {
+                Intent i=new Intent(ActivityAddnote.this, ActivityProfnote.class);
+                startActivity(i);
+                return true;
+            }else if (item.getItemId() == R.id.addnote) {
                 Intent i=new Intent(ActivityAddnote.this, ActivityAddnote.class);
                 startActivity(i);
                 return true;

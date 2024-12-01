@@ -31,7 +31,6 @@ public class Home_prof extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(android.view.MenuItem item) {
                 if (item.getItemId() == R.id.action_your_icon) {
-                    // Show popup menu
                     showPopupMenu(findViewById(R.id.toolbar));
                     return true;
                 }
@@ -62,7 +61,13 @@ public class Home_prof extends AppCompatActivity {
                     Intent i = new Intent(Home_prof.this, Home_prof.class);
                     startActivity(i);
                     return true;
-                } else if (item.getItemId() == R.id.addnote) {
+                }
+                else if (item.getItemId() == R.id.Profnote) {
+                    // Navigate to ActivityAddnote
+                    Intent i = new Intent(Home_prof.this, ActivityProfnote.class);
+                    startActivity(i);
+                    return true;
+                }else if (item.getItemId() == R.id.addnote) {
                     // Navigate to ActivityAddnote
                     Intent i = new Intent(Home_prof.this, ActivityAddnote.class);
                     startActivity(i);

@@ -1,6 +1,7 @@
 package com.example.gestion_des_notes.Activityprof;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
@@ -57,7 +58,11 @@ public class ActivityProfnote extends AppCompatActivity {
         recyclerView=findViewById(R.id.recyclernotes);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         apinotes= Apiapp.getClient().create(Apinotes.class);
-        Call<List<Notes>> call=apinotes.getallbycinprof(223322);
+        SharedPreferences sp=getSharedPreferences("UserPref",MODE_PRIVATE);
+        String CinP=sp.getString("CIN",null);
+
+        int Cin2=Integer.parseInt(CinP);
+        Call<List<Notes>> call=apinotes.getallbycinprof(Cin2);////////////////////////////////////////////////////////////////////////////////////
         call.enqueue(new Callback<List<Notes>>() {
             @Override
             public void onResponse(Call<List<Notes>> call, Response<List<Notes>> response) {
@@ -128,6 +133,10 @@ public class ActivityProfnote extends AppCompatActivity {
             if (item.getItemId() == R.id.home) {
                 // Show "Hello Home" toast when Home is clicked
                 Intent i=new Intent(ActivityProfnote.this, Home_prof.class);
+                startActivity(i);
+                return true;
+            } else if (item.getItemId() == R.id.Profnote) {
+                Intent i=new Intent(ActivityProfnote.this, ActivityProfnote.class);
                 startActivity(i);
                 return true;
             } else if (item.getItemId() == R.id.addnote) {
