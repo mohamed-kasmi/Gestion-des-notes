@@ -12,29 +12,36 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Gestion_des_notes"
+        android:theme="@style/Theme.AppCompat.DayNight"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".Activityetud.ActivityNoteEtud"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".Activityadmin.ActivityMatiere"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".Activityadmin.ActivityEtud"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".Activityadmin.ActivityProfReq"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".Activityprof.ActivityAddnote"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".Activityprof.Home_prof"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".Activityprof.ActivityProfnote"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".SignUp"

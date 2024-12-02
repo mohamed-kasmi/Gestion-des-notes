@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         SharedPreferences sp = getSharedPreferences("UserPref", MODE_PRIVATE);
         boolean isStayConnected = sp.getBoolean("STAY_CONNECTED", false);
         if (isStayConnected) {

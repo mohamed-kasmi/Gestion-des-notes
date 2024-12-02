@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_your_icon"
-        android:icon="@drawable/ic_baseline_menu_24"
+        android:icon="@drawable/baseline"
         android:title="Hello Prof"
         app:showAsAction="always" />
 </menu>
