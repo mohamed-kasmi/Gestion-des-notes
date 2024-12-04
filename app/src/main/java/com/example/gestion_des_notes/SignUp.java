@@ -2,6 +2,8 @@ package com.example.gestion_des_notes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,6 +60,11 @@ public class SignUp extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    VibrationEffect effect = VibrationEffect.createOneShot(300, 10);
+                    vibrator.vibrate(effect);
+                }
                 String firstNameText = firstName.getText().toString().trim();
                 String lastNameText = lastName.getText().toString().trim();
                 String emailText = email.getText().toString().trim();
@@ -135,6 +142,7 @@ public class SignUp extends AppCompatActivity {
                         }
                     });
                 }
+
             }
         });
     }

@@ -3,6 +3,7 @@ package com.example.gestion_des_notes.Activityadmin;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -89,6 +90,7 @@ public class ActivityProfReq extends AppCompatActivity {
     }
     private void showPopupMenu(View anchor) {
         PopupMenu popupMenuadmin = new PopupMenu(this, anchor);
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         popupMenuadmin.getMenuInflater().inflate(R.menu.popup_menuadmin, popupMenuadmin.getMenu());
         popupMenuadmin.setGravity(Gravity.END);
 
@@ -108,6 +110,7 @@ public class ActivityProfReq extends AppCompatActivity {
                     startActivity(i);
                     return true;
                 } else if (item.getItemId() == R.id.logout1) {
+                    vibrator.vibrate(500);
                     Intent i = new Intent(ActivityProfReq.this, MainActivity.class);
                     startActivity(i);
                     return true;

@@ -3,6 +3,7 @@ package com.example.gestion_des_notes.Activityprof;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -46,6 +47,7 @@ public class Home_prof extends AppCompatActivity {
     }
 
     private void showPopupMenu(View anchor) {
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         PopupMenu popupMenu = new PopupMenu(this, anchor);
 
         // Inflate the menu for the popup
@@ -78,7 +80,7 @@ public class Home_prof extends AppCompatActivity {
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putBoolean("STAY_CONNECTED", false);
                     editor.apply();
-
+                    vibrator.vibrate(500);
                     Intent i = new Intent(Home_prof.this, MainActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);

@@ -3,6 +3,7 @@ package com.example.gestion_des_notes.Activityetud;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -122,6 +123,7 @@ public class ActivityNoteEtud extends AppCompatActivity {
 
     private void showPopupMenu(View anchor) {
         PopupMenu popupMenuetud = new PopupMenu(this, anchor);
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         popupMenuetud.getMenuInflater().inflate(R.menu.popup_menuetud, popupMenuetud.getMenu());
         popupMenuetud.setGravity(Gravity.END);
 
@@ -131,9 +133,9 @@ public class ActivityNoteEtud extends AppCompatActivity {
                 if (item.getItemId() == R.id.logout1) {
                     SharedPreferences sp = getSharedPreferences("UserPref", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sp.edit();
-                    editor.putBoolean("STAY_CONNECTED", false);
+                    editor.putBoolean("STAY_CONNECTED_E", false);
                     editor.apply();
-
+                    vibrator.vibrate(500);
                     Intent i = new Intent(ActivityNoteEtud.this, MainActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);

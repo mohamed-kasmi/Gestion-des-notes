@@ -2,6 +2,7 @@ package com.example.gestion_des_notes.Activityadmin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -51,6 +52,7 @@ public class ActivityEtud extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_etud);
+
         Toolbar toolbar = findViewById(R.id.toolbar3);
         setSupportActionBar(toolbar);
         toolbar.setOnMenuItemClickListener(item -> {
@@ -130,6 +132,7 @@ public class ActivityEtud extends AppCompatActivity {
         PopupMenu popupMenuadmin = new PopupMenu(this, anchor);
         popupMenuadmin.getMenuInflater().inflate(R.menu.popup_menuadmin, popupMenuadmin.getMenu());
         popupMenuadmin.setGravity(Gravity.END);
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
         popupMenuadmin.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
@@ -147,8 +150,10 @@ public class ActivityEtud extends AppCompatActivity {
                     startActivity(i);
                     return true;
                 } else if (item.getItemId() == R.id.logout1) {
+                    vibrator.vibrate(500);
                     Intent i = new Intent(ActivityEtud.this, MainActivity.class);
                     startActivity(i);
+                    Toast.makeText(ActivityEtud.this, "Session expirée avec succées.", Toast.LENGTH_SHORT).show();
                     return true;
                 }
                 return false;

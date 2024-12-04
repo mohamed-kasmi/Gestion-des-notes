@@ -3,6 +3,8 @@ package com.example.gestion_des_notes;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("UserPref", MODE_PRIVATE);
         boolean isStayConnected = sp.getBoolean("STAY_CONNECTED", false);
         if (isStayConnected) {
+            Intent intent = new Intent(MainActivity.this, Home_prof.class);
+            startActivity(intent);
+            return;
+        }
+        boolean isStayConnectedE = sp.getBoolean("STAY_CONNECTED_E", false);
+        if (isStayConnectedE) {
             Intent intent = new Intent(MainActivity.this, ActivityNoteEtud.class);
             startActivity(intent);
             return;
@@ -83,6 +91,11 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(MainActivity.this, "Veuillez sélectionner un rôle", Toast.LENGTH_SHORT).show();
                     }
+                }
+                Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    VibrationEffect effect = VibrationEffect.createOneShot(300, 10);
+                    vibrator.vibrate(effect);
                 }
             }
         });
@@ -177,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                     editor.apply();
                     if (Checked.isChecked()) {
 
-                        editor.putBoolean("STAY_CONNECTED", true);
+                        editor.putBoolean("STAY_CONNECTED_E", true);
                         editor.apply();
                     }
                     Intent intent = new Intent(MainActivity.this, ActivityNoteEtud.class);

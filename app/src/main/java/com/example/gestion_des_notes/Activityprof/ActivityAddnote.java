@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -195,6 +196,7 @@ private String selectedOption;
     private void showPopupMenu(View anchor) {
         // Create a PopupMenu anchored to the clicked view
         PopupMenu popupMenu = new PopupMenu(this, anchor);
+        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         popupMenu.setGravity(Gravity.END);
         // Inflate the menu for the popup
         popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
@@ -215,6 +217,7 @@ private String selectedOption;
                 startActivity(i);
                 return true;
             } else if (item.getItemId() == R.id.logout) {
+                vibrator.vibrate(500);
                 Intent i=new Intent(ActivityAddnote.this, MainActivity.class);
                 startActivity(i);
             }
