@@ -2,22 +2,48 @@ package com.example.gestion_des_notes.Activityprof;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.gestion_des_notes.DataBase.ProfDataBase;
 import com.example.gestion_des_notes.MainActivity;
+import com.example.gestion_des_notes.Models.Prof;
+import com.example.gestion_des_notes.Models.ProfSQL;
 import com.example.gestion_des_notes.R;
+import com.example.gestion_des_notes.Service.Apiapp;
+import com.example.gestion_des_notes.Service.Apinotes;
+import com.example.gestion_des_notes.Service.Apiprof;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Home_prof extends AppCompatActivity {
-
+Button B;
+ImageView Image;
+TextView t1,t2,t3;
+ProfDataBase db;
+Apiprof apiprof;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +64,48 @@ public class Home_prof extends AppCompatActivity {
                 return false;
             }
         });
+        SharedPreferences sp = getSharedPreferences("UserPref", MODE_PRIVATE);
+        String cin=sp.getString("CIN",null);
+        int cinP=Integer.parseInt(cin);
+        t1=findViewById(R.id.t1);
+        t2=findViewById(R.id.t2);
+        t3=findViewById(R.id.t3);
+        apiprof= Apiapp.getClient().create(Apiprof.class);
+        Call<Prof> call= apiprof.getprof(cinP);
+        call.enqueue(new Callback<Prof>() {
+            @Override
+            public void onResponse(Call<Prof> call, Response<Prof> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    // Successfully received Prof data
+                    Prof prof = response.body();
+                    t1.setText("Nom: " + prof.getNom());
+                    t2.setText("Prenom: " + prof.getPrenom());
+                    t3.setText("Email: " + prof.getEmail());}
+            }
+
+            @Override
+            public void onFailure(Call<Prof> call, Throwable t) {
+                Toast.makeText(Home_prof.this, "erreur", Toast.LENGTH_SHORT).show();
+            }
+        });
+        B=findViewById(R.id.Button1);
+        B.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(Home_prof.this, add_photo.class);
+                startActivity(i);
+            }
+        });
+
+        db= new ProfDataBase(this);
+        Image=findViewById(R.id.immg);
+        ProfSQL profSQL=db.getCountryById(cinP);
+        if (profSQL != null) {
+            Bitmap imgBitmap= BitmapFactory.decodeByteArray(profSQL.getImage(),0,profSQL.getImage().length);
+            Image.setImageBitmap(imgBitmap);
+        } else {
+
+        }
     }
 
     @Override
@@ -89,6 +157,7 @@ public class Home_prof extends AppCompatActivity {
                 }
                 return false;
             }
+
         });
 
         // Show the popup menu

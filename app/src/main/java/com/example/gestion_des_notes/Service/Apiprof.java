@@ -19,6 +19,8 @@ public interface Apiprof {
     Call<List<Prof>> getallprof();
     @GET("/prof/cin-by-email")
     Call<Integer> getcinprobyfmail(@Query("email") String email);
+    @GET("/prof/prof/{cin}")
+    Call<Prof> getprof(@Path("cin") int cin);
     @FormUrlEncoded
     @POST("/prof/signup")
 

@@ -63,7 +63,7 @@ public class ActivityProfnote extends AppCompatActivity {
         String CinP=sp.getString("CIN",null);
 
         int Cin2=Integer.parseInt(CinP);
-        Call<List<Notes>> call=apinotes.getallbycinprof(Cin2);////////////////////////////////////////////////////////////////////////////////////
+        Call<List<Notes>> call=apinotes.getallbycinprof(Cin2);
         call.enqueue(new Callback<List<Notes>>() {
             @Override
             public void onResponse(Call<List<Notes>> call, Response<List<Notes>> response) {
