@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,14 +46,15 @@ public class ActivityProfnote extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Handle menu item clicks
-        toolbar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.action_your_icon) {
-                // Show popup menu
-                showPopupMenu(findViewById(R.id.toolbar));
-                return true;
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_your_icon) {
+                    showPopupMenu(findViewById(R.id.toolbar));
+                    return true;
+                }
+                return false;
             }
-            return false;
         });
         tcin=findViewById(R.id.cinetud);
         button=findViewById(R.id.buttoncherchenote);
@@ -61,7 +63,6 @@ public class ActivityProfnote extends AppCompatActivity {
         apinotes= Apiapp.getClient().create(Apinotes.class);
         SharedPreferences sp=getSharedPreferences("UserPref",MODE_PRIVATE);
         String CinP=sp.getString("CIN",null);
-
         int Cin2=Integer.parseInt(CinP);
         Call<List<Notes>> call=apinotes.getallbycinprof(Cin2);
         call.enqueue(new Callback<List<Notes>>() {
@@ -82,7 +83,7 @@ public class ActivityProfnote extends AppCompatActivity {
             public void onClick(View v) {
                 String tcin1=tcin.getText().toString();
                 if(tcin1.isEmpty()){
-                    Call<List<Notes>> call=apinotes.getallbycinprof(223322);
+                    Call<List<Notes>> call=apinotes.getallbycinprof(Cin2);
                     call.enqueue(new Callback<List<Notes>>() {
                         @Override
                         public void onResponse(Call<List<Notes>> call, Response<List<Notes>> response) {
@@ -98,7 +99,7 @@ public class ActivityProfnote extends AppCompatActivity {
                     });
                 }else{
                     int cin=Integer.parseInt(tcin1);
-                    Call<List<Notes>> call=apinotes.findbycinetud(cin,223322);
+                    Call<List<Notes>> call=apinotes.findbycinetud(cin,Cin2);
                     call.enqueue(new Callback<List<Notes>>() {
                         @Override
                         public void onResponse(Call<List<Notes>> call, Response<List<Notes>> response) {

@@ -56,12 +56,16 @@ ArrayList<Matiere> list=new ArrayList<>();
         setContentView(R.layout.activity_matiere);
         Toolbar toolbar = findViewById(R.id.toolbar3);
         setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.action_your_icon2) {
-                showPopupMenu(findViewById(R.id.toolbar3));
-                return true;
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_your_icon2) {
+                    showPopupMenu(findViewById(R.id.toolbar3));
+                    return true;
+                }
+                return false;
             }
-            return false;
         });
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());

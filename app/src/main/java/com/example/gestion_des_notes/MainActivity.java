@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
         B.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = E1.getText().toString().trim();
-                String password = E2.getText().toString().trim();
+                String email = E1.getText().toString();
+                String password = E2.getText().toString();
                 if (email.equals("admin") && password.equals("admin")) {
                     Intent i = new Intent(MainActivity.this, ActivityProfReq.class);
                     startActivity(i);
@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     Intent intent = new Intent(MainActivity.this, Home_prof.class);
                     startActivity(intent);
-                    finish();
+
                 } else {
                     Toast.makeText(MainActivity.this, "Erreur lors de la récupération du CIN.", Toast.LENGTH_SHORT).show();
                 }
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     Intent intent = new Intent(MainActivity.this, ActivityNoteEtud.class);
                     startActivity(intent);
-                    finish();
+
                 } else {
                     Toast.makeText(MainActivity.this, "Erreur lors de la récupération du CIN étudiant.", Toast.LENGTH_SHORT).show();
                 }

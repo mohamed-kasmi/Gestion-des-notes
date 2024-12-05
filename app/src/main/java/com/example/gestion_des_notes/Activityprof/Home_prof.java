@@ -10,6 +10,7 @@ import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -33,6 +34,8 @@ import com.example.gestion_des_notes.Service.Apiprof;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,10 +56,9 @@ Apiprof apiprof;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Set menu item click listener
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
-            public boolean onMenuItemClick(android.view.MenuItem item) {
+            public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.action_your_icon) {
                     showPopupMenu(findViewById(R.id.toolbar));
                     return true;
@@ -118,32 +120,28 @@ Apiprof apiprof;
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         PopupMenu popupMenu = new PopupMenu(this, anchor);
 
-        // Inflate the menu for the popup
         popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
         popupMenu.setGravity(Gravity.END);
 
-        // Set menu item click listener for the popup
+
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(android.view.MenuItem item) {
                 if (item.getItemId() == R.id.home) {
-                    // Navigate to Home_prof activity
+
                     Intent i = new Intent(Home_prof.this, Home_prof.class);
                     startActivity(i);
                     return true;
                 }
                 else if (item.getItemId() == R.id.Profnote) {
-                    // Navigate to ActivityAddnote
                     Intent i = new Intent(Home_prof.this, ActivityProfnote.class);
                     startActivity(i);
                     return true;
                 }else if (item.getItemId() == R.id.addnote) {
-                    // Navigate to ActivityAddnote
                     Intent i = new Intent(Home_prof.this, ActivityAddnote.class);
                     startActivity(i);
                     return true;
                 } else if (item.getItemId() == R.id.logout) {
-                    // Clear STAY_CONNECTED flag and navigate to MainActivity
                     SharedPreferences sp = getSharedPreferences("UserPref", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sp.edit();
                     editor.putBoolean("STAY_CONNECTED", false);
@@ -160,7 +158,6 @@ Apiprof apiprof;
 
         });
 
-        // Show the popup menu
         popupMenu.show();
     }
 }

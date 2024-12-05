@@ -52,15 +52,18 @@ public class ActivityEtud extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_etud);
-
         Toolbar toolbar = findViewById(R.id.toolbar3);
         setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.action_your_icon2) {
-                showPopupMenu(findViewById(R.id.toolbar3));
-                return true;
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_your_icon2) {
+                    showPopupMenu(findViewById(R.id.toolbar3));
+                    return true;
+                }
+                return false;
             }
-            return false;
         });
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -103,7 +106,6 @@ public class ActivityEtud extends AppCompatActivity {
         });
         recyclerView=findViewById(R.id.recycleretud);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         Call<List<Etudiant>> call=apietudiant.getalletud();
         call.enqueue(new Callback<List<Etudiant>>() {
             @Override
@@ -113,7 +115,6 @@ public class ActivityEtud extends AppCompatActivity {
                 recyclerView.setAdapter(etudAdapter);
 
             }
-
             @Override
             public void onFailure(Call<List<Etudiant>> call, Throwable t) {
                 Log.i("appsmart",t.toString());
@@ -127,13 +128,11 @@ public class ActivityEtud extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menuadmin, menu);
         return true;
     }
-
     private void showPopupMenu(View anchor) {
         PopupMenu popupMenuadmin = new PopupMenu(this, anchor);
         popupMenuadmin.getMenuInflater().inflate(R.menu.popup_menuadmin, popupMenuadmin.getMenu());
         popupMenuadmin.setGravity(Gravity.END);
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-
         popupMenuadmin.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {

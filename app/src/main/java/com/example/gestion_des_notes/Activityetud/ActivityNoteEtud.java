@@ -45,12 +45,16 @@ public class ActivityNoteEtud extends AppCompatActivity {
         setContentView(R.layout.activity_note_etud);
         Toolbar toolbar = findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
-        toolbar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.action_your_icon1) {
-                showPopupMenu(findViewById(R.id.toolbar1));
-                return true;
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_your_icon1) {
+                    showPopupMenu(findViewById(R.id.toolbar1));
+                    return true;
+                }
+                return false;
             }
-            return false;
         });
 
         tche = findViewById(R.id.serchnoteetud);
@@ -58,8 +62,6 @@ public class ActivityNoteEtud extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycleretudnote);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         apinotes = Apiapp.getClient().create(Apinotes.class);
-
-        // Load student notes based on CIN
         SharedPreferences sp = getSharedPreferences("UserPref", MODE_PRIVATE);
         String cin = sp.getString("CIN_ETUD", null);
         int Cin1 = Integer.parseInt(cin);
@@ -78,41 +80,45 @@ public class ActivityNoteEtud extends AppCompatActivity {
             }
         });
 
-        // Search by subject
-        button.setOnClickListener(v -> {
-            String matiere = tche.getText().toString();
-            if (matiere.isEmpty()) {
-                Call<List<Notes>> callEmpty = apinotes.getallbycinetude(Cin1);
-                callEmpty.enqueue(new Callback<List<Notes>>() {
-                    @Override
-                    public void onResponse(Call<List<Notes>> call, Response<List<Notes>> response) {
-                        list = (ArrayList<Notes>) response.body();
-                        EtudNoteAdapter etudNoteAdapter = new EtudNoteAdapter(list);
-                        recyclerView.setAdapter(etudNoteAdapter);
-                    }
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String matiere = tche.getText().toString();
+                if (matiere.isEmpty()) {
+                    Call<List<Notes>> callEmpty = apinotes.getallbycinetude(Cin1);
+                    callEmpty.enqueue(new Callback<List<Notes>>() {
+                        @Override
+                        public void onResponse(Call<List<Notes>> call, Response<List<Notes>> response) {
+                            list = (ArrayList<Notes>) response.body();
+                            EtudNoteAdapter etudNoteAdapter = new EtudNoteAdapter(list);
+                            recyclerView.setAdapter(etudNoteAdapter);
+                        }
 
-                    @Override
-                    public void onFailure(Call<List<Notes>> call, Throwable t) {
-                        Toast.makeText(ActivityNoteEtud.this, "Erreur de connexion", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            } else {
-                Call<List<Notes>> callMatiere = apinotes.getallbycinetudandmatiere(Cin1, matiere);
-                callMatiere.enqueue(new Callback<List<Notes>>() {
-                    @Override
-                    public void onResponse(Call<List<Notes>> call, Response<List<Notes>> response) {
-                        list = (ArrayList<Notes>) response.body();
-                        EtudNoteAdapter etudNoteAdapter = new EtudNoteAdapter(list);
-                        recyclerView.setAdapter(etudNoteAdapter);
-                    }
+                        @Override
+                        public void onFailure(Call<List<Notes>> call, Throwable t) {
+                            Toast.makeText(ActivityNoteEtud.this, "Erreur de connexion", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Call<List<Notes>> callMatiere = apinotes.getallbycinetudandmatiere(Cin1, matiere);
+                    callMatiere.enqueue(new Callback<List<Notes>>() {
+                        @Override
+                        public void onResponse(Call<List<Notes>> call, Response<List<Notes>> response) {
+                            list = (ArrayList<Notes>) response.body();
+                            EtudNoteAdapter etudNoteAdapter = new EtudNoteAdapter(list);
+                            recyclerView.setAdapter(etudNoteAdapter);
+                        }
 
-                    @Override
-                    public void onFailure(Call<List<Notes>> call, Throwable t) {
-                        Toast.makeText(ActivityNoteEtud.this, "Erreur de connexion", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<List<Notes>> call, Throwable t) {
+                            Toast.makeText(ActivityNoteEtud.this, "Erreur de connexion", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
+
+
     }
 
     @Override
@@ -137,9 +143,7 @@ public class ActivityNoteEtud extends AppCompatActivity {
                     editor.apply();
                     vibrator.vibrate(500);
                     Intent i = new Intent(ActivityNoteEtud.this, MainActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(i);
-                    finish();
                     return true;
             }
                 return false;

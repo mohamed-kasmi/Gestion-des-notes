@@ -65,14 +65,13 @@ public class SignUp extends AppCompatActivity {
                     VibrationEffect effect = VibrationEffect.createOneShot(300, 10);
                     vibrator.vibrate(effect);
                 }
-                String firstNameText = firstName.getText().toString().trim();
-                String lastNameText = lastName.getText().toString().trim();
-                String emailText = email.getText().toString().trim();
-                String cinText = cin.getText().toString().trim();
-                String passwordText = password.getText().toString().trim();
-                String confirmPasswordText = confirmPassword.getText().toString().trim();
+                String firstNameText = firstName.getText().toString();
+                String lastNameText = lastName.getText().toString();
+                String emailText = email.getText().toString();
+                String cinText = cin.getText().toString();
+                String passwordText = password.getText().toString();
+                String confirmPasswordText = confirmPassword.getText().toString();
 
-                // Validate input fields
                 if (firstNameText.isEmpty() || lastNameText.isEmpty() || emailText.isEmpty() ||
                         cinText.isEmpty() || passwordText.isEmpty() || confirmPasswordText.isEmpty()) {
                     Toast.makeText(SignUp.this, "Veuillez remplir tous les champs.", Toast.LENGTH_SHORT).show();

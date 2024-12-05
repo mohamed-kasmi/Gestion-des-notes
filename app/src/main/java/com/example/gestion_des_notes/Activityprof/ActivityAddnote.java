@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -50,18 +51,18 @@ private String selectedOption;
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_note);
-        Toolbar toolbar;
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Handle menu item clicks
-        toolbar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.action_your_icon) {
-                // Show popup menu
-                showPopupMenu(findViewById(R.id.toolbar));
-                return true;
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_your_icon) {
+                    showPopupMenu(findViewById(R.id.toolbar));
+                    return true;
+                }
+                return false;
             }
-            return false;
         });
         apimatiere= Apiapp.getClient().create(Apimatiere.class);
         apinotes= Apiapp.getClient().create(Apinotes.class);
@@ -119,21 +120,19 @@ private String selectedOption;
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // Store the selected option in the class-level variable
                 selectedOption = parent.getItemAtPosition(position).toString();
 
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Handle the case when no item is selected (optional)
                 Toast.makeText(ActivityAddnote.this, "No item selected", Toast.LENGTH_SHORT).show();
             }
         });
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int note=Integer.parseInt(noteajouter.getText().toString());
+
+                double note=Double.parseDouble(noteajouter.getText().toString());
                 int cin=Integer.parseInt(cinetud.getText().toString());
                 String classee=classe.getText().toString();
                 String typee="";
@@ -142,7 +141,6 @@ private String selectedOption;
                 if (typeex.isChecked()){ typee="EX";}
                 SharedPreferences sp=getSharedPreferences("UserPref",MODE_PRIVATE);
                 String CinP=sp.getString("CIN",null);
-
                 int Cin2=Integer.parseInt(CinP);
                 Call<Void> call=apinotes.addnote(cin,Cin2,selectedOption,classee,typee,note);/////////////////////////////////////////////////////////////////////////
                 call.enqueue(new Callback<Void>() {
@@ -150,13 +148,11 @@ private String selectedOption;
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         Toast.makeText(ActivityAddnote.this, "Note a ete ajouter.", Toast.LENGTH_SHORT).show();
                     }
-
                     @Override
                     public void onFailure(Call<Void> call, Throwable t) {
                         Toast.makeText(ActivityAddnote.this, "Erreur de connexion.", Toast.LENGTH_SHORT).show();
                     }
                 });
-
             }
         });
 
@@ -183,7 +179,7 @@ private String selectedOption;
     private void updateSpinner(List<String> options) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_spinner_item, // Default spinner item layout
+                android.R.layout.simple_spinner_item,
                 options
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -194,17 +190,15 @@ private String selectedOption;
         return true;
     }
     private void showPopupMenu(View anchor) {
-        // Create a PopupMenu anchored to the clicked view
         PopupMenu popupMenu = new PopupMenu(this, anchor);
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         popupMenu.setGravity(Gravity.END);
-        // Inflate the menu for the popup
         popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
 
-        // Handle menu item clicks using if-else
+
         popupMenu.setOnMenuItemClickListener(item -> {
             if (item.getItemId() == R.id.home) {
-                // Show "Hello Home" toast when Home is clicked
+
                 Intent i=new Intent(ActivityAddnote.this, Home_prof.class);
                 startActivity(i);
                 return true;
@@ -224,7 +218,7 @@ private String selectedOption;
             return false;
         });
 
-        // Show the popup menu
+
         popupMenu.show();
     }
 }

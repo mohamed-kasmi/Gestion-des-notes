@@ -61,26 +61,22 @@ public class ProfDataBase extends SQLiteOpenHelper {
     public Integer findIdById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Integer foundId = null;
-
-        // Query the database to check if the ID exists
         Cursor cursor = db.query(
-                TCountry,             // Table name
-                new String[]{CID}, // Columns to retrieve (ID)
-                CID + " = ?",     // WHERE clause
-                new String[]{String.valueOf(id)}, // WHERE arguments (ID value)
-                null,                   // Group by
-                null,                   // Having
-                null                    // Order by
+                TCountry,
+                new String[]{CID},
+                CID + " = ?",
+                new String[]{String.valueOf(id)},
+                null,
+                null,
+                null
         );
 
-        // Check if the cursor has a result and get the ID
         if (cursor != null && cursor.moveToFirst()) {
-            foundId = cursor.getInt(cursor.getColumnIndexOrThrow(CID)); // Get the ID from the cursor
+            foundId = cursor.getInt(cursor.getColumnIndexOrThrow(CID));
             cursor.close();
         }
-
         db.close();
-        return foundId; // Return the ID if found, or null if not found
+        return foundId;
     }
 
 

@@ -31,7 +31,6 @@ public interface Apiprof {
                        @Field("email") String email,
                        @Field("password") String password);
 
-    Call<String> addprof(@Body Prof prof);
     @FormUrlEncoded
     @POST("/prof/login")
     Call<Void> loginprof(@Field("email") String email,

@@ -11,7 +11,7 @@ import com.example.gestion_des_notes.Models.Prof_Req;
 import com.example.gestion_des_notes.R;
 
 public class EtudViewholder extends RecyclerView.ViewHolder{
-    TextView tcin,tname,tlastname,temail;
+    TextView tcin,tlastname,temail;
     public EtudViewholder(@NonNull View itemView) {
         super(itemView);
         tcin=itemView.findViewById(R.id.cinetud);

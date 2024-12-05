@@ -18,16 +18,16 @@ import retrofit2.http.Query;
 public interface Apietudiant {
     @GET("/etudiant/getalletud")
     Call<List<Etudiant>> getalletud();
-    @FormUrlEncoded
+    @FormUrlEncoded // for sending data in the url request  body
     @POST("/etudiant/addetudbyadmin")
     Call<Void> addetudbyadmin(@Field("cin") int cin,
-                                @Field("classe") String classe);
+                                @Field("classe") String classe); // to spesify the key value
     @FormUrlEncoded
     @POST("/etudiant/login")
     Call<Void> loginetud(@Field("email") String email,
                            @Field("password") String password);
     @GET("/etudiant/cin-by-email")
-    Call<Integer> getCinEtudByEmail(@Query("email") String email);
+    Call<Integer> getCinEtudByEmail(@Query("email") String email);// for binding the parametre in the query req
     @PUT("/etudiant/signup/{cin}")
     Call<Void> signupetud(@Path("cin") int cin,@Body Etudiant etudiant);
     @DELETE("/etudiant/delete/{cinetud}")
